@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google"
 import { NuqsAdapter } from "nuqs/adapters/next/app"
 import "./globals.css";
+import { ConvexClientProvider } from "@/components/convex-client-provider";
 
 // const geistSans = localFont({
 //   src: "./fonts/GeistVF.woff",
@@ -34,7 +35,9 @@ export default function RootLayout({
         className={inter.className}
       >
         <NuqsAdapter>
-          {children}
+          <ConvexClientProvider>
+            {children}
+          </ConvexClientProvider>
         </NuqsAdapter>
       </body>
     </html>
