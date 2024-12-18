@@ -12,7 +12,9 @@ const Home = () => {
       <div className="mt-16">
         <TemplatesGallery />
       </div>
-
+      <div>
+        123
+      </div>
     </div>
   )
 }
