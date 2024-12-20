@@ -5,13 +5,16 @@ import { Navbar } from "./navbar"
 import { TemplatesGallery } from "./templates-gallrey"
 import { api } from "../../../convex/_generated/api"
 import { DocumetnsTable } from "./documents-table"
+import { useSearchParam } from "@/hooks/use-search-param"
 
 
 const Home = () => {
+  const [search] = useSearchParam("search");
+
   const {
     results,
     status,
-    loadMore } = usePaginatedQuery(api.documents.getDocuments, {}, { initialNumItems: 5 });
+    loadMore } = usePaginatedQuery(api.documents.getDocuments, { search }, { initialNumItems: 5 });
 
   return (
     <div className="min-h-screen flex flex-col">

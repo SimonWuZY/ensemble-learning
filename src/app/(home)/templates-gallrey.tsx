@@ -12,6 +12,7 @@ import {
 import { templates } from "@/constants/templates";
 import { cn } from "@/lib/utils";
 import { api } from "../../../convex/_generated/api";
+import { toast } from "sonner";
 
 
 export const TemplatesGallery = () => {
@@ -22,8 +23,10 @@ export const TemplatesGallery = () => {
     const onTemplateClick = (title: string, initialContent: string) => {
         setIsCreating(true);
         createDocument({ title, initialContent })
+            .catch(() => toast.error("出现了一些问题"))
             .then((documentId) => {
                 router.push(`/documents/${documentId}`);
+                toast.success("文档重命名成功！");
             })
             .finally(() => {
                 setIsCreating(false);
@@ -52,7 +55,7 @@ export const TemplatesGallery = () => {
                                     <button
                                         disabled={isCreating}
                                         // TODO: 添加文档初始内容
-                                        onClick={() => onTemplateClick(template.label, "")}  
+                                        onClick={() => onTemplateClick(template.label, "")}
                                         style={{
                                             backgroundImage: `url(${template.imageUrl})`,
                                             backgroundSize: "cover",

@@ -21,7 +21,7 @@ interface DcoumentsTableProps {
 export const DocumetnsTable = ({
     documents,
     loadMore,
-    statue,
+    status,
 }: DcoumentsTableProps) => {
     return (
         <div className="max-w-screen-xl mx-auto px-16 py-6 flex flex-col">
@@ -60,8 +60,13 @@ export const DocumetnsTable = ({
                 </Table>
             )}
             <div className="flex items-center justify-center">
-                <Button variant="ghost" size="sm" onClick={() => loadMore(5)} disabled={statue !== "CanLodaMore"}>
-
+                <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => loadMore(5)}
+                    disabled={status !== "CanLoadMore"}
+                >
+                    {status === "CanLoadMore" ? "加载更多文档" : "没有更多文档"}
                 </Button>
 
             </div>

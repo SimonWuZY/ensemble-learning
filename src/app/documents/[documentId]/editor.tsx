@@ -18,12 +18,15 @@ import TextStyle from '@tiptap/extension-text-style'
 import ImageResize from 'tiptap-extension-resize-image'
 import StarterKit from '@tiptap/starter-kit'
 
+import { useLiveblocksExtension } from "@liveblocks/react-tiptap"
 import { useEditorStore } from '@/store/use-editor-store'
 import { FontSizeExtension } from "@/extensions/font-size";
 import { LineHeightExtension } from "@/extensions/line-height";
 import { Ruler } from './ruler';
 
 export const Editor = () => {
+    const liveblocks = useLiveblocksExtension();
+
     // 状态管理 
     const { setEditor } = useEditorStore();
 
@@ -62,6 +65,7 @@ export const Editor = () => {
         },
         extensions: [
             StarterKit,
+            liveblocks,
             LineHeightExtension,
             FontSizeExtension,
             TextAlign.configure({

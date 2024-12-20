@@ -1,6 +1,6 @@
 "use client"
 import { useState } from "react";
-
+import { toast } from "sonner";
 import {
     AlertDialog,
     AlertDialogTrigger,
@@ -47,6 +47,8 @@ export const RemoveDialog = ({ documentId, children }: RemoveDialogProps) => {
                             e.stopPropagation()
                             setIsRemoving(true);
                             remove({ id: documentId })
+                                .catch(() => toast.error("出现了一些问题"))
+                                .then(() => toast.success("文档删除成功！"))
                                 .finally(() => setIsRemoving(false));
                         }}
 
