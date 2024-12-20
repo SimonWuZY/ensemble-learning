@@ -51,7 +51,8 @@ export const TemplatesGallery = () => {
                                 >
                                     <button
                                         disabled={isCreating}
-                                        onClick={() => onTemplateClick(template.label, "")}
+                                        // TODO: 添加文档初始内容
+                                        onClick={() => onTemplateClick(template.label, "")}  
                                         style={{
                                             backgroundImage: `url(${template.imageUrl})`,
                                             backgroundSize: "cover",
