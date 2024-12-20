@@ -26,7 +26,7 @@ export const TemplatesGallery = () => {
             .catch(() => toast.error("出现了一些问题"))
             .then((documentId) => {
                 router.push(`/documents/${documentId}`);
-                toast.success("文档重命名成功！");
+                toast.success("文档创建成功！");
             })
             .finally(() => {
                 setIsCreating(false);
