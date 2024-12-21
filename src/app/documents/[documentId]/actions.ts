@@ -23,6 +23,7 @@ export async function getUsers() {
         id: user.id,
         name: user.username ?? user.primaryEmailAddress?.emailAddress ?? "匿名用户",
         avatar: user.imageUrl,
+        color: "",
     }))
 
     return users;

@@ -7,7 +7,6 @@ import { InboxNotification, InboxNotificationList } from "@liveblocks/react-ui";
 import {
     DropdownMenu,
     DropdownMenuContent,
-    DropdownMenuItem,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";

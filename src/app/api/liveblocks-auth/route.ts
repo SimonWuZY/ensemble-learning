@@ -36,10 +36,17 @@ export async function POST(req: Request) {
         return new Response("Unauthorized", { status: 401 });
     }
 
+    const name = user.username ?? user.primaryEmailAddress?.emailAddress ?? "匿名用户";
+    // 为每个用户添加独特的颜色
+    const nameToNumber = name.split("").reduce((acc, char) => acc + char.charCodeAt(0), 0)
+    const hue = Math.abs(nameToNumber) % 360;
+    const color = `hsl(${hue}, 80%, 60%)`;
+
     const session = liveblocks.prepareSession(user.id, {
         userInfo: {
-            name: user.username ?? user.primaryEmailAddress?.emailAddress ?? "匿名用户",
+            name,
             avatar: user.imageUrl,
+            color,
         },
     });
 

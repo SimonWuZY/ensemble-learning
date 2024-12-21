@@ -8,6 +8,7 @@ const markers = Array.from({ length: 83 }, (_, i) => i)
 
 export const Ruler = () => {
     const leftMargin = useStorage((root) => root.leftMargin) ?? LEFT_MARIGIN_DEFAULT;
+    // TODO: storage 加载完成前禁用 ruler
     const setLeftMargin = useMutation(({ storage }, position: number) => {
         storage.set("leftMargin", position);
     }, [])
@@ -30,6 +31,7 @@ export const Ruler = () => {
     }
 
     const handleMouseMove = (e: React.MouseEvent) => {
+        // TODO: 统一用 constans 管理
         const PAGE_WIDTH = 816;
         const MINIMUM_SPACE = 50;
 
