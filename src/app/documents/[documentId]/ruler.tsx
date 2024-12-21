@@ -1,17 +1,18 @@
 import { useRef, useState } from 'react';
 import { FaCaretDown } from 'react-icons/fa';
 import { useStorage, useMutation } from "@liveblocks/react";
+import { LEFT_MARIGIN_DEFAULT, RIGHT_MARIGIN_DEFAULT } from '@/constants/margins';
 
 // 可以优化数量 
 const markers = Array.from({ length: 83 }, (_, i) => i)
 
 export const Ruler = () => {
-    const leftMargin = useStorage((root) => root.leftMargin) ?? 56;
+    const leftMargin = useStorage((root) => root.leftMargin) ?? LEFT_MARIGIN_DEFAULT;
     const setLeftMargin = useMutation(({ storage }, position: number) => {
         storage.set("leftMargin", position);
     }, [])
 
-    const rightMargin = useStorage((root) => root.rightMargin) ?? 56;
+    const rightMargin = useStorage((root) => root.rightMargin) ?? RIGHT_MARIGIN_DEFAULT;
     const setRightMargin = useMutation(({ storage }, position: number) => {
         storage.set("rightMargin", position);
     }, [])
@@ -60,11 +61,11 @@ export const Ruler = () => {
 
     // reset cursor to the initial position
     const handleLeftDoubleClick = () => {
-        setLeftMargin(56);
+        setLeftMargin(LEFT_MARIGIN_DEFAULT);
     }
 
     const handleRightDoubleClick = () => {
-        setRightMargin(56);
+        setRightMargin(RIGHT_MARIGIN_DEFAULT);
     }
 
     return (

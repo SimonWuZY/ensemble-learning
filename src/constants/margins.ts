@@ -1,0 +1,2 @@
+export const LEFT_MARIGIN_DEFAULT = 56;
+export const RIGHT_MARIGIN_DEFAULT = 56;
