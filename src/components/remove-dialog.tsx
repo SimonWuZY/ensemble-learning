@@ -15,6 +15,7 @@ import {
 import { Id } from "../../convex/_generated/dataModel";
 import { useMutation } from "convex/react";
 import { api } from "../../convex/_generated/api";
+// import { useRouter } from "next/navigation";
 
 interface RemoveDialogProps {
     documentId: Id<"documents">;
@@ -22,6 +23,7 @@ interface RemoveDialogProps {
 };
 
 export const RemoveDialog = ({ documentId, children }: RemoveDialogProps) => {
+    // const router = useRouter();
     const remove = useMutation(api.documents.removeDocumentById);
     const [isRemoving, setIsRemoving] = useState(false);
 
@@ -48,7 +50,12 @@ export const RemoveDialog = ({ documentId, children }: RemoveDialogProps) => {
                             setIsRemoving(true);
                             remove({ id: documentId })
                                 .catch(() => toast.error("出现了一些问题"))
-                                .then(() => toast.success("文档删除成功！"))
+                                .then(() => {
+                                    toast.success("文档删除成功！")
+                                    // FIXME: 删除文档重定向到首页
+                                    //  原因是删除后找不到文档的捕获 error 先于重定向
+                                    // router.push("/");
+                                })
                                 .finally(() => setIsRemoving(false));
                         }}
 
