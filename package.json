@@ -3,10 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev -p 3001 -H 0.0.0.0",
     "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "start": "next start -p 3001 -H 0.0.0.0",
+    "lint": "next lint",
+    "install-and-start": "npm install --legacy-peer-deps && npm run start"
   },
   "dependencies": {
     "@clerk/nextjs": "^6.5.1",
