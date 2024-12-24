@@ -1,37 +1,27 @@
-"use client"
+import { Navbar } from "../documentPage/navbar";
 
-import { usePaginatedQuery } from "convex/react"
-import { Navbar } from "./navbar"
-import { TemplatesGallery } from "./templates-gallrey"
-import { api } from "../../../convex/_generated/api"
-import { DocumetnsTable } from "./documents-table"
-import { useSearchParam } from "@/hooks/use-search-param"
-
-
-const Home = () => {
-  const [search] = useSearchParam("search");
-
-  const {
-    results,
-    status,
-    loadMore } = usePaginatedQuery(api.documents.getDocuments, { search }, { initialNumItems: 5 });
-
-  return (
-    <div className="min-h-screen flex flex-col">
-      <div className="fixed top-0 left-0 right-0 z-10 h-16 bg-white p-4">
-        <Navbar />
-      </div>
-      <div className="mt-16">
-        <TemplatesGallery />
-        <DocumetnsTable
-          documents={results}
-          loadMore={loadMore}
-          status={status}
-        />
-      </div>
-
-    </div>
-  )
+interface ArticleIntroProps {
+    author: string;
+    data: string;
+    label: string;
 }
 
-export default Home
+interface ArticleProps {
+    id: string;
+    title: string;
+    introduction: ArticleIntroProps;
+    cover?: string
+    content: string;
+}
+
+const HomePage = () => {
+    return (
+        <div className="min-h-screen flex flex-col">
+            <div className="fixed top-0 left-0 right-0 z-10 h-16 bg-white p-4">
+                <Navbar />
+            </div>
+        </div>
+    );
+}
+
+export default HomePage;

@@ -276,3 +276,11 @@
 div[data-radix-popper-content-wrapper] {
   z-index: 50 !important;
 }
+
+.draggable {
+  position: fixed;
+  top: 50px;
+  left: 50px;
+  z-index: 1000;
+  cursor: move;
+}
