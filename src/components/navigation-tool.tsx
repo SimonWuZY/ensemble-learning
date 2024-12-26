@@ -63,29 +63,48 @@ export const NavigationMenuTool = () => {
 
         let offsetX = 0, offsetY = 0, initialX = 0, initialY = 0;
 
-        const onMouseDown = (e: MouseEvent) => {
+        const onMouseDown = (e: MouseEvent | TouchEvent) => {
             e.preventDefault();
-            initialX = e.clientX - offsetX;
-            initialY = e.clientY - offsetY;
-            document.addEventListener("mousemove", onMouseMove);
-            document.addEventListener("mouseup", onMouseUp);
+            if (e instanceof MouseEvent) {
+                initialX = e.clientX - offsetX;
+                initialY = e.clientY - offsetY;
+                document.addEventListener("mousemove", onMouseMove);
+                document.addEventListener("mouseup", onMouseUp);
+            } else if (e instanceof TouchEvent) {
+                initialX = e.touches[0].clientX - offsetX;
+                initialY = e.touches[0].clientY - offsetY;
+                document.addEventListener("touchmove", onMouseMove);
+                document.addEventListener("touchend", onMouseUp);
+            }
         };
 
-        const onMouseMove = (e: MouseEvent) => {
-            offsetX = e.clientX - initialX;
-            offsetY = e.clientY - initialY;
+        const onMouseMove = (e: MouseEvent | TouchEvent) => {
+            if (e instanceof MouseEvent) {
+                offsetX = e.clientX - initialX;
+                offsetY = e.clientY - initialY;
+            } else if (e instanceof TouchEvent) {
+                offsetX = e.touches[0].clientX - initialX;
+                offsetY = e.touches[0].clientY - initialY;
+            }
             dragElement.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
         };
 
-        const onMouseUp = () => {
-            document.removeEventListener("mousemove", onMouseMove);
-            document.removeEventListener("mouseup", onMouseUp);
+        const onMouseUp = (e: MouseEvent | TouchEvent) => {
+            if (e instanceof MouseEvent) {
+                document.removeEventListener("mousemove", onMouseMove);
+                document.removeEventListener("mouseup", onMouseUp);
+            } else if (e instanceof TouchEvent) {
+                document.removeEventListener("touchmove", onMouseMove);
+                document.removeEventListener("touchend", onMouseUp);
+            }
         };
 
         dragElement.addEventListener("mousedown", onMouseDown);
+        dragElement.addEventListener("touchstart", onMouseDown);
 
         return () => {
             dragElement.removeEventListener("mousedown", onMouseDown);
+            dragElement.removeEventListener("touchstart", onMouseDown);
         };
     }, []);
 

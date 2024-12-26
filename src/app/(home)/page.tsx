@@ -1,5 +1,7 @@
-import { HomeLabels } from "./home-labels";
+"use client"
+import { NavigationMenuTool } from "@/components/navigation-tool";
 import { HomeNavBar } from "./home-nav-bar";
+import BottomNavBar from "../../components/bottom-narbar";
 
 interface ArticleIntroProps {
     author: string;
@@ -22,8 +24,13 @@ const HomePage = () => {
                 <HomeNavBar />
             </div>
             <div className="mt-16">
-                <HomeLabels />
+                {/* <HomeLabels /> */}
             </div>
+            {/* 文章 */}
+            {/* 悬浮框 */}
+            <NavigationMenuTool />
+            {/* 底部导航栏 */}
+            <BottomNavBar />
         </div>
     );
 };

@@ -7,6 +7,7 @@ import { api } from "../../../convex/_generated/api"
 import { DocumetnsTable } from "./documents-table"
 import { useSearchParam } from "@/hooks/use-search-param"
 import { NavigationMenuTool } from "@/components/navigation-tool"
+import BottomNavBar from "@/components/bottom-narbar"
 
 const Home = () => {
   const [search] = useSearchParam("search");
@@ -30,6 +31,7 @@ const Home = () => {
         />
       </div>
       <NavigationMenuTool />
+      <BottomNavBar />
     </div>
   )
 }
