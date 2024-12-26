@@ -6,6 +6,7 @@ import { ConvexClientProvider } from "@/components/convex-client-provider";
 import { Toaster } from "@/components/ui/sonner";
 import "@liveblocks/react-ui/styles.css";
 import "@liveblocks/react-tiptap/styles.css";
+import { LoadingProvider } from "@/components/loading";
 
 // const geistSans = localFont({
 //   src: "./fonts/GeistVF.woff",
@@ -37,12 +38,14 @@ export default function RootLayout({
       <body
         className={inter.className}
       >
-        <NuqsAdapter>
-          <ConvexClientProvider>
-            <Toaster />
-            {children}
-          </ConvexClientProvider>
-        </NuqsAdapter>
+        <LoadingProvider>
+          <NuqsAdapter>
+            <ConvexClientProvider>
+              <Toaster />
+              {children}
+            </ConvexClientProvider>
+          </NuqsAdapter>
+        </LoadingProvider>
       </body>
     </html>
   );

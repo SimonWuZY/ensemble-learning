@@ -4,22 +4,26 @@ import { Home, FileText, HelpCircle } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { useLoading } from "./loading";
 
 const BottomNavBar = () => {
     const isMobile = useIsMobile();
     const [currentPath, setCurrentPath] = useState("");
     const pathname = usePathname();
+    const { setLoading } = useLoading();
 
     useEffect(() => {
         if (typeof window !== "undefined") {
+            setLoading(true); // 开始加载动画
             setCurrentPath(pathname);
+            setLoading(false); // 停止加载动画
         }
-    }, [pathname]);
+    }, [pathname, setLoading]);
 
     const navItems = [
-        { title: "文档", href: "/document", icon: FileText },
+        { title: "文档", href: "/documents", icon: FileText },
         { title: "首页", href: "/", icon: Home },
-        { title: "助手", href: "/assistant", icon: HelpCircle },
+        { title: "助手", href: "/chat", icon: HelpCircle },
     ];
 
     return (

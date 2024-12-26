@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { FaCaretDown } from 'react-icons/fa';
 import { useStorage, useMutation } from "@liveblocks/react";
 import { LEFT_MARIGIN_DEFAULT, RIGHT_MARIGIN_DEFAULT } from '@/constants/margins';
@@ -30,7 +30,9 @@ export const Ruler = () => {
         setIsDraggingRight(true);
     }
 
-    const handleMouseMove = (e: React.MouseEvent) => {
+    const handleMouseMove = (e: React.MouseEvent | React.TouchEvent) => {
+        e.preventDefault(); // 阻止默认的屏幕滑动事件
+
         // TODO: 统一用 constans 管理
         const PAGE_WIDTH = 816;
         const MINIMUM_SPACE = 50;
@@ -38,8 +40,9 @@ export const Ruler = () => {
         if ((isDraggingLeft || isDraggingRight) && rulerRef.current) {
             const container = rulerRef.current.querySelector("#ruler-container");
             if (container) {
-                const containerReact = container.getBoundingClientRect();
-                const relativeX = e.clientX - containerReact.left;
+                const containerRect = container.getBoundingClientRect();
+                const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX;
+                const relativeX = clientX - containerRect.left;
                 const rawPosition = Math.max(0, Math.min(PAGE_WIDTH, relativeX));
 
                 if (isDraggingLeft) {
@@ -49,8 +52,8 @@ export const Ruler = () => {
                 } else if (isDraggingRight) {
                     const maxRightPosition = PAGE_WIDTH - (leftMargin + MINIMUM_SPACE);
                     const newRightPosition = Math.max(PAGE_WIDTH - rawPosition, 0);
-                    const constraineRightPosition = Math.min(newRightPosition, maxRightPosition);
-                    setRightMargin(constraineRightPosition);
+                    const constrainedRightPosition = Math.min(newRightPosition, maxRightPosition);
+                    setRightMargin(constrainedRightPosition);
                 }
             }
         }
@@ -70,12 +73,29 @@ export const Ruler = () => {
         setRightMargin(RIGHT_MARIGIN_DEFAULT);
     }
 
+    useEffect(() => {
+        const handleTouchMove = (e: TouchEvent) => {
+            if (isDraggingLeft || isDraggingRight) {
+                e.preventDefault();
+                handleMouseMove(e as unknown as React.TouchEvent);
+            }
+        };
+
+        document.addEventListener('touchmove', handleTouchMove, { passive: false });
+        return () => {
+            document.removeEventListener('touchmove', handleTouchMove);
+        };
+    }, [isDraggingLeft, isDraggingRight]);
+
     return (
         <div
             ref={rulerRef}
             onMouseMove={handleMouseMove}
             onMouseUp={handleMouseUp}
             onMouseLeave={handleMouseUp}
+            onTouchMove={handleMouseMove}
+            onTouchEnd={handleMouseUp}
+            onTouchStart={(e) => e.preventDefault()} // 阻止默认的屏幕滑动事件
             className="w-[816px] mx-auto h-6 border-b border-gray-300 flex items-end relative select-none print:hidden">
             <div
                 id="ruler-container"
@@ -86,6 +106,7 @@ export const Ruler = () => {
                     isLeft={true}
                     isDragging={isDraggingLeft}
                     onMouseDown={handleLeftMouseDown}
+                    onTouchStart={handleLeftMouseDown}
                     onDoubleClick={handleLeftDoubleClick}
                 />
                 <Marker
@@ -93,6 +114,7 @@ export const Ruler = () => {
                     isLeft={false}
                     isDragging={isDraggingRight}
                     onMouseDown={handleRightMouseDown}
+                    onTouchStart={handleRightMouseDown}
                     onDoubleClick={handleRightDoubleClick}
                 />
                 <div className="absolute inset-x-0 bottom-0 h-full">
@@ -104,9 +126,6 @@ export const Ruler = () => {
                             return (
                                 <div
                                     key={marker}
-                                    // tailwind 是静态编译的 如下样式会工作的不可靠
-                                    // 不能动态添加将来可能会用到的类名
-                                    // className="absolute bottom-0 left-[$position}]"
                                     className="absolute bottom-0"
                                     style={{ left: `${position}px` }}
                                 >
@@ -140,6 +159,7 @@ interface MarkerProps {
     isLeft: boolean;
     isDragging: boolean;
     onMouseDown: () => void;
+    onTouchStart: () => void;
     onDoubleClick: () => void;
 }
 
@@ -148,6 +168,7 @@ const Marker = ({
     isLeft,
     isDragging,
     onMouseDown,
+    onTouchStart,
     onDoubleClick,
 }: MarkerProps) => {
     return (
@@ -155,6 +176,7 @@ const Marker = ({
             className="absolute top-0 w-4 h-full cursor-ew-resize z-[5] group -ml-2"
             style={{ [isLeft ? "left" : "right"]: `${position}px` }}
             onMouseDown={onMouseDown}
+            onTouchStart={onTouchStart}
             onDoubleClick={onDoubleClick}
         >
             <FaCaretDown className='absolute left-1/2 top-0 h-full fill-blue-500 transform -translate-x-1/2' />
@@ -170,5 +192,4 @@ const Marker = ({
             />
         </div>
     )
-
 }

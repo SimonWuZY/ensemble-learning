@@ -13,10 +13,13 @@ import { templates } from "@/constants/templates";
 import { cn } from "@/lib/utils";
 import { api } from "../../../convex/_generated/api";
 import { toast } from "sonner";
+import { OrganizationSwitcher } from "@clerk/nextjs";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 
 export const TemplatesGallery = () => {
     const router = useRouter();
+    const isMobile = useIsMobile();
     const createDocument = useMutation(api.documents.createDocument);
     const [isCreating, setIsCreating] = useState(false);
 
@@ -35,10 +38,20 @@ export const TemplatesGallery = () => {
 
     return (
         <div className="bg-[#F1F3F4]">
-            <div className="max-w-screen-xl mx-auto px-16 py-6 flex flex-col gap-y-4">
-                <h3 className="font-medium">
+            {isMobile && (<div className="flex items-center justify-center gap-4 py-4">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-purple-500 font-bold text-2xl">
                     开始一篇新文档
-                </h3>
+                </span>
+                <OrganizationSwitcher
+                    afterCreateOrganizationUrl="/"
+                    afterLeaveOrganizationUrl="/"
+                    afterSelectOrganizationUrl="/"
+                    afterSelectPersonalUrl="/"
+                />
+            </div>)}
+
+            <div className="max-w-screen-xl mx-auto px-16 flex flex-col gap-y-4">
+
                 <Carousel>
                     <CarouselContent className="-ml-4">
                         {templates.map((template) =>
