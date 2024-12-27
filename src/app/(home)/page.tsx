@@ -1,6 +1,6 @@
 "use client"
 import { NavigationMenuTool } from "@/components/navigation-tool";
-import { HomeNavBar } from "./home-nav-bar";
+import { HomeNavBar } from "./home-navbar";
 import BottomNavBar from "../../components/bottom-narbar";
 import { HomeLabels } from "./home-labels";
 
@@ -8,6 +8,8 @@ interface ArticleIntroProps {
     author: string;
     data: string;
     label: string;
+    likeNumber: number;
+    commentNumber: number;
 }
 
 interface ArticleProps {
