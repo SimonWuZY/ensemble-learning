@@ -10,8 +10,9 @@ interface DocumentIdPageProps {
 };
 
 const DocumentIdPage = async ({ params }: DocumentIdPageProps) => {
+    // console.log(params);
     const { documentId } = await params;
-
+    // console.log(documentId);
     const { getToken } = await auth();
     const token = await getToken({ template: "convex" }) ?? undefined;
 

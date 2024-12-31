@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button"
-import { ExternalLinkIcon, MoreVertical, TrashIcon, FilePenIcon } from "lucide-react"
+import { ExternalLinkIcon, MoreVertical, TrashIcon, FilePenIcon, LucideSwitchCamera } from "lucide-react"
 import { Id } from "../../../convex/_generated/dataModel";
 import {
     DropdownMenu,
@@ -54,7 +54,14 @@ export const DocumentMenu = ({
                     onClick={() => onNewTab(documentId)}
                 >
                     <ExternalLinkIcon className="size-4 mr-2" />
-                    Open in a new tab
+                    新页面打开
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                    // TODO: 此文档添加到论坛系统中 
+                    onClick={() => { }}
+                >
+                    <LucideSwitchCamera className="size-4 mr-2" />
+                    论坛共享
                 </DropdownMenuItem>
             </DropdownMenuContent>
         </DropdownMenu>

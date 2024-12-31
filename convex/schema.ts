@@ -15,4 +15,17 @@ export default defineSchema({
             searchField: "title",
             filterFields: ["ownerId", "organizationId"],
         }),
+    articles: defineTable({
+        title: v.string(),
+        introduction: v.object({
+            author: v.string(),
+            data: v.string(),
+            label: v.string(),
+            likeNumber: v.number(),
+            commentNumber: v.number(),
+        }),
+        cover: v.optional(v.string()),
+        content: v.string(),
+    })
 });
+

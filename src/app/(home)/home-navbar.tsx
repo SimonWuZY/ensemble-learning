@@ -5,7 +5,7 @@ import { UserButton, OrganizationSwitcher } from "@clerk/nextjs";
 import { SearchInputArticles } from "@/app/(home)/search-input-articles";
 import { useIsMobile } from "@/hooks/use-mobile";
 
-export const HomeNavBar = () => {
+const HomeNavBar = () => {
     const isMobile = useIsMobile();
     if (isMobile) {
         return (
@@ -38,3 +38,4 @@ export const HomeNavBar = () => {
             </div>
         </nav>);
 }
+export default HomeNavBar;

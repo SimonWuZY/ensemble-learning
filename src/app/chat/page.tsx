@@ -13,21 +13,40 @@ const ChatPage = () => {
     const [content, setContent] = useState('');
     const [isCentered, setIsCentered] = useState(true);
 
-    // Agent for request
+    // 模型输出函数
     const [agent] = useXAgent({
         request: async ({ message }, { onSuccess, onUpdate }) => {
-            const fullContent = `Streaming output instead of Bubble typing effect. You typed: ${message}`;
-            let currentContent = '';
+            try {
+                const response = await fetch('http://39.105.11.179:5000/chat/public', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ query: message }),
+                });
 
-            const id = setInterval(() => {
-                currentContent = fullContent.slice(0, currentContent.length + 2);
-                onUpdate(currentContent);
-
-                if (currentContent === fullContent) {
-                    clearInterval(id);
-                    onSuccess(fullContent);
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
                 }
-            }, 100);
+                const data = await response.json();
+                console.log(data);
+
+                const fullContent = data.reply; // 确保访问的是 `reply` 字段
+                let currentContent = '';
+
+                const id = setInterval(() => {
+                    currentContent = fullContent.slice(0, currentContent.length + 2);
+                    onUpdate(currentContent);
+
+                    if (currentContent === fullContent) {
+                        clearInterval(id);
+                        onSuccess(fullContent);
+                    }
+                }, 100);
+            } catch (error) {
+                console.error('Error fetching the response:', error);
+                onSuccess('Error fetching the response');
+            }
         },
     });
 
@@ -54,7 +73,8 @@ const ChatPage = () => {
                 <ChatNavBar />
             </div>
             <Flex vertical gap="middle" className={`flex-1 ${isCentered ? 'justify-center' : 'justify-start'}`}>
-                {isCentered && <CenteredProps onPromptClick={handlePromptClick} />} {/* 条件渲染 CenteredMessage 组件 */}
+                {isCentered && <CenteredProps onPromptClick={handlePromptClick} />}
+                {/* 条件渲染 CenteredMessage 组件 */}
                 {!isCentered && <ChatMessages messages={messages} />}
                 <ChatInput
                     content={content}
