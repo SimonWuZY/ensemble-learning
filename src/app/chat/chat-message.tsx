@@ -14,6 +14,7 @@ const roles: GetProp<typeof Bubble.List, 'roles'> = {
     },
 };
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const ChatMessages: React.FC<{ messages: any[] }> = ({ messages }) => {
     return (
         <Bubble.List

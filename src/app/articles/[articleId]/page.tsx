@@ -7,13 +7,13 @@ import { ArticleIntroProps } from "@/constants/interfaces";
 import Outline from "./article-outline";
 
 interface ArticleIdPageProps {
-    params: { articleId: Id<"articles"> };
-};
+    params: Promise<{ articleId: Id<"articles"> }>;
+}
 
 const convex = new ConvexHttpClient(process.env.NEXT_PUBLIC_CONVEX_URL!);
 
 const ArticlePage = async ({ params }: ArticleIdPageProps) => {
-    const { articleId } = await params; // 此处 await 有用
+    const { articleId } = await params;
 
     const article = await convex.query(api.articles.getArticleById, { id: articleId });
 
@@ -32,5 +32,6 @@ const ArticlePage = async ({ params }: ArticleIdPageProps) => {
         </div>
     );
 };
+
 
 export default ArticlePage;

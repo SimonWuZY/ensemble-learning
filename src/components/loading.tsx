@@ -3,10 +3,13 @@ import { createContext, useContext, useState } from "react";
 
 const LoadingContext = createContext({
     isLoading: false,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     setLoading: (loading: boolean) => { },
 });
 // FIXME: 加载有问题
-export const LoadingProvider = ({ children }) => {
+import { ReactNode } from "react";
+
+export const LoadingProvider = ({ children }: { children: ReactNode }) => {
     const [isLoading, setLoading] = useState(false);
     return (
         <LoadingContext.Provider value={{ isLoading, setLoading }}>

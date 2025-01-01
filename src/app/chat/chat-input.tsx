@@ -4,7 +4,7 @@ import { Sender } from '@ant-design/x';
 const ChatInput: React.FC<{
     content: string;
     isCentered: boolean;
-    agent: any;
+    agent: { isRequesting: () => boolean };
     onRequest: (content: string) => void;
     setContent: (content: string) => void;
 }> = ({ content, isCentered, agent, onRequest, setContent }) => {

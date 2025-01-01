@@ -10,7 +10,16 @@ const nextConfig = {
     LIVEBLOCKS_SECRT_KEY: process.env.LIVEBLOCKS_SECRT_KEY,
   },
   images: {
-    domains: ['via.placeholder.com', 'example.com'], // 添加你需要允许的域名
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '**',
+      },
+      {
+        protocol: 'http',
+        hostname: '**',
+      },
+    ],
   },
 }
 

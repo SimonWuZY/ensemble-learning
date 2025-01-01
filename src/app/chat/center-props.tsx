@@ -19,33 +19,35 @@ const renderTitle = (icon: React.ReactElement, title: string) => (
 const items: PromptsProps['items'] = [
     {
         key: '21',
-        label: renderTitle(<ReadOutlined style={{ color: '#1890FF' }} />, 'Design Guide'),
+        label: renderTitle(<ReadOutlined style={{ color: '#1890FF' }} />, '使用指南'),
         children: [
             {
                 key: '1-1',
                 icon: <HeartOutlined />,
-                label: `Know the well`,
+                label: `如何开始`,
             },
             {
                 key: '1-2',
                 icon: <SmileOutlined />,
-                label: `Set the AI role`,
+                label: `自定义助手：
+                        请你为我定制高等数学\n
+                        期末复习路线`,
             },
         ],
     },
     {
         key: '2',
-        label: renderTitle(<RocketOutlined style={{ color: '#722ED1' }} />, 'Start Creating'),
+        label: renderTitle(<RocketOutlined style={{ color: '#722ED1' }} />, '常用对话'),
         children: [
             {
                 key: '2-1',
                 icon: <RocketOutlined />,
-                label: 'Fast Start',
+                label: '为我解释一下软件开发流程',
             },
             {
                 key: '2-2',
                 icon: <RocketOutlined />,
-                label: 'Online Playground',
+                label: '如何使用 React 开发一个简单的应用',
             },
         ],
     },
