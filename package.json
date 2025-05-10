@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev -p 3001 -H 0.0.0.0",
+    "dev": "next dev",
     "build": "next build",
-    "start": "next start -p 3001 -H 0.0.0.0",
+    "start": "next start",
     "lint": "next lint",
     "install-and-start": "npm install --legacy-peer-deps && npm run start"
   },
