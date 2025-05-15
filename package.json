@@ -7,7 +7,11 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "install-and-start": "npm install --legacy-peer-deps && npm run start"
+    "prepare": "husky install",
+    "install-and-start": "npm instalgl --legacy-peer-deps && npm run start"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": "eslint --fix"
   },
   "dependencies": {
     "@ant-design/x": "^1.0.4",
@@ -104,6 +108,8 @@
     "@types/react-dom": "^18",
     "eslint": "^8",
     "eslint-config-next": "15.0.3",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.5.2",
     "postcss": "^8",
     "tailwindcss": "^3.4.1",
     "typescript": "^5"

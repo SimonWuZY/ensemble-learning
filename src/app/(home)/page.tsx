@@ -19,8 +19,8 @@ const HomePage = () => {
         setLoading(true);
         const fetchedArticles = await fetchArticles();
         setArticles(fetchedArticles);
-      } catch (err) {
-        setError("Failed to load articles. Please try again later.");
+      } catch (err: unknown) {
+        setError("Failed to load articles. Please try again later. error: " + (err as Error).message);
       } finally {
         setLoading(false);
       }
