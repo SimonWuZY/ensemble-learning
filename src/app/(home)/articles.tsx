@@ -36,12 +36,16 @@ const ArticleCard: React.FC<{ article: ArticleProps }> = ({ article }) => {
     );
 };
 
-const ArticlesOverview: React.FC<{ articles: ArticleProps[] }> = ({ articles }) => {
+const ArticlesOverview: React.FC<{ articles?: ArticleProps[] }> = ({ articles }) => {
     return (
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1px' }}>
-            {articles.map(article => (
-                <ArticleCard key={article.id} article={article} />
-            ))}
+            {articles && articles.length > 0 ? (
+                articles.map(article => (
+                    <ArticleCard key={article.id} article={article} />
+                ))
+            ) : (
+                <p>No articles available.</p>
+            )}
         </div>
     );
 };
